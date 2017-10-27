@@ -3,28 +3,31 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Getting Started - WekaDeeplearning4j</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+
   
   <script>
     // Current page data
     var mkdocs_page_name = "Getting Started";
-    var mkdocs_page_input_path = "getting-started.md";
-    var mkdocs_page_url = "/getting-started/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
   <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
   
 </head>
 
@@ -44,55 +47,70 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
+        <ul class="current">
           
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../install/">Installation</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../install/">Installation</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Getting Started</a>
-    <ul class="subnav">
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Getting Started</a>
+        
+            <ul>
             
-    <li class="toctree-l2"><a href="#commandline-interface">Commandline Interface</a></li>
-    
-
-    <li class="toctree-l2"><a href="#java">Java</a></li>
-    
-
-    <li class="toctree-l2"><a href="#gui">GUI</a></li>
-    
-
-    </ul>
-	    </li>
+                <li class="toctree-l3"><a href="#usage">Usage</a></li>
+                
+                    <li><a class="toctree-l4" href="#commandline-interface">Commandline Interface</a></li>
+                
+                    <li><a class="toctree-l4" href="#java">Java</a></li>
+                
+                    <li><a class="toctree-l4" href="#gui">GUI</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Examples</span>
+            <li>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../examples/classifying-iris/">Classifying the Iris Dataset</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../examples/classifying-mnist/">Classifying the MNIST Dataset</a>
-                </li>
+    <li><span>Examples</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../examples/classifying-iris/">Classifying the Iris Dataset</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../examples/classifying-mnist/">Classifying the MNIST Dataset</a>
+        
+    </li>
+
+        
     </ul>
-	    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../troubleshooting/">Troubleshooting</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../troubleshooting/">Troubleshooting</a>
+        
+    </li>
+<li>
           
         </ul>
       </div>
@@ -119,8 +137,9 @@
     <li>Getting Started</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/getting-started.md"
-          class="icon icon-github"> Edit on GitHub</a>
+        
+          <a href="https://github.com/Waikato/wekaDeeplearning4j" class="icon icon-github"> Edit on GitHub</a>
+        
       
     </li>
   </ul>
@@ -129,7 +148,8 @@
           <div role="main">
             <div class="section">
               
-                <p>If you are new to Weka, you should probably first start reading the <a href="https://weka.wikispaces.com/Primer">Weka primer</a> as a basic introduction.</p>
+                <h1 id="usage">Usage</h1>
+<p>If you are new to Weka, you should probably first start reading the <a href="https://weka.wikispaces.com/Primer">Weka primer</a> as a basic introduction.</p>
 <p>As most of Weka, the WekaDeeplearning4j's functionality is accessible in three ways:</p>
 <ul>
 <li>Via the commandline interface</li>
@@ -138,7 +158,7 @@
 </ul>
 <p>All three ways are explained in the following. The main classifier exposed by this package is classed <code>Dl4jMlpClassifier</code>.
 Simple examples are given in the for the <a href="../examples/classifying-iris">Iris dataset</a> and the <a href="../examples/classifying-mnist">MNIST dataset</a> in the examples section.</p>
-<h1 id="commandline-interface">Commandline Interface</h1>
+<h2 id="commandline-interface">Commandline Interface</h2>
 <p>A first look for the available commandline options of the <code>Dl4jMlpClassifier</code> is shown with</p>
 <pre><code class="bash">$ java -cp weka.jar weka.Run .Dl4jMlpClassifier -h
 </code></pre>
@@ -188,7 +208,7 @@ Simple examples are given in the for the <a href="../examples/classifying-iris">
 
 <p>The above setup builds a network with one hidden layer, having 10 output units using the ReLU activation function, followed by an output layer with the softmax activation function, using a multi-class cross-entropy loss function (MCXENT) as optimization objective.</p>
 <p>Another important option is the neural network configuration <code>-conf</code> in which you can setup hyperparameters for the network. Available options can be found in the <a href="https://waikato.github.io/wekaDeeplearning4j/doc/weka/dl4j/NeuralNetConfiguration.html">Java documentation</a> (the field <code>commandLineParamSynopsis</code> indicates the commandline parameter name for each available method).</p>
-<h1 id="java">Java</h1>
+<h2 id="java">Java</h2>
 <p>The Java API is a straight forward wrapper for the official DeepLearning4j API. Using the <code>Dl4jMlPClassifier</code> your code should usually start with</p>
 <pre><code class="java">// Create a new Multi-Layer-Perceptron classifier
 Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
@@ -197,12 +217,12 @@ Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
 <p>The networks architecture can be set up by creating each layer step by step:</p>
 <pre><code class="java">DenseLayer denseLayer = new DenseLayer();
 denseLayer.setNOut(10);
-denseLayer.setActivationFn(Activation.RELU.getActivationFunction());
+denseLayer.setActivationFn(new ActivationReLU());
 denseLayer.setWeightInit(WeightInit.XAVIER);
 
 // Define the output layer
 OutputLayer outputLayer = new OutputLayer();
-outputLayer.setActivationFn(Activation.SOFTMAX.getActivationFunction());
+outputLayer.setActivationFn(new ActivationSoftmax());
 outputLayer.setUpdater(Updater.SGD);
 outputLayer.setLearningRate(0.01);
 outputLayer.setBiasLearningRate(0.01);
@@ -219,8 +239,22 @@ clf.setNeuralNetConfiguration(nnc);
 clf.setLayers(new Layer[]{denseLayer, outputLayer});
 </code></pre>
 
-<h1 id="gui">GUI</h1>
+<h2 id="gui">GUI</h2>
 <p>A tutorial on how to use the GUI is coming soon.</p>
+<!--- //TODO: uncomment as soon as ModelZoo is working again
+# Model Zoo
+WekaDeeplearning4j adapts the modelzoo of Deeplearning4j. That means it is possible to load predefined architectures as neural network and train it on a new dataset. Currently implemented architectures are:
+
+- AlexNet
+- LeNet
+- SimpleCNN
+- VGG16
+- VGG19
+
+This set of models will be extended over the time.
+
+To set a predefined model, e.g. LeNet, from the modelzoo, it is necessary to add the `-zooModel "weka.dl4j.zoo.LeNet"` option via commandline, or call the `setZooModel(new LeNet())` on the `Dl4jMlpClassifier`.
+-->
               
             </div>
           </div>
@@ -228,7 +262,7 @@ clf.setLayers(new Layer[]{denseLayer, outputLayer});
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../examples/classifying-iris/" class="btn btn-neutral float-right" title="Classifying the Iris Dataset">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../examples/classifying-iris/" class="btn btn-neutral float-right" title="Classifying the Iris Dataset"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../install/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -250,13 +284,13 @@ clf.setLayers(new Layer[]{denseLayer, outputLayer});
       </div>
 
     </section>
-    
+
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+<div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/Waikato/wekaDeeplearning4j" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
@@ -266,7 +300,6 @@ clf.setLayers(new Layer[]{denseLayer, outputLayer});
       
     </span>
 </div>
-    <script src="../js/theme.js"></script>
 
 </body>
 </html>

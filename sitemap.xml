@@ -3,24 +3,24 @@
 
     
     <url>
-     <loc>/</loc>
-     <lastmod>2017-10-16</lastmod>
+     <loc>None/</loc>
+     <lastmod>2017-10-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/install/</loc>
-     <lastmod>2017-10-16</lastmod>
+     <loc>None/install/</loc>
+     <lastmod>2017-10-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/getting-started/</loc>
-     <lastmod>2017-10-16</lastmod>
+     <loc>None/getting-started/</loc>
+     <lastmod>2017-10-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -28,14 +28,14 @@
     
         
     <url>
-     <loc>/examples/classifying-iris/</loc>
-     <lastmod>2017-10-16</lastmod>
+     <loc>None/examples/classifying-iris/</loc>
+     <lastmod>2017-10-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/examples/classifying-mnist/</loc>
-     <lastmod>2017-10-16</lastmod>
+     <loc>None/examples/classifying-mnist/</loc>
+     <lastmod>2017-10-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -43,8 +43,8 @@
 
     
     <url>
-     <loc>/troubleshooting/</loc>
-     <lastmod>2017-10-16</lastmod>
+     <loc>None/troubleshooting/</loc>
+     <lastmod>2017-10-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
