@@ -78,6 +78,9 @@
                     <li><a class="toctree-l4" href="#gui">GUI</a></li>
                 
             
+                <li class="toctree-l3"><a href="#model-zoo">Model Zoo</a></li>
+                
+            
             </ul>
         
     </li>
@@ -156,8 +159,8 @@
 <li>Programming with Weka in Java</li>
 <li>Using the Weka workbench GUI</li>
 </ul>
-<p>All three ways are explained in the following. The main classifier exposed by this package is classed <code>Dl4jMlpClassifier</code>.
-Simple examples are given in the for the <a href="../examples/classifying-iris">Iris dataset</a> and the <a href="../examples/classifying-mnist">MNIST dataset</a> in the examples section.</p>
+<p>All three ways are explained in the following. The main classifier exposed by this package is named <code>Dl4jMlpClassifier</code>.
+Simple examples are given in the examples section for the <a href="../examples/classifying-iris">Iris dataset</a> and the <a href="../examples/classifying-mnist">MNIST dataset</a>.</p>
 <h2 id="commandline-interface">Commandline Interface</h2>
 <p>A first look for the available commandline options of the <code>Dl4jMlpClassifier</code> is shown with</p>
 <pre><code class="bash">$ java -cp weka.jar weka.Run .Dl4jMlpClassifier -h
@@ -241,20 +244,17 @@ clf.setLayers(new Layer[]{denseLayer, outputLayer});
 
 <h2 id="gui">GUI</h2>
 <p>A tutorial on how to use the GUI is coming soon.</p>
-<!--- //TODO: uncomment as soon as ModelZoo is working again
-# Model Zoo
-WekaDeeplearning4j adapts the modelzoo of Deeplearning4j. That means it is possible to load predefined architectures as neural network and train it on a new dataset. Currently implemented architectures are:
-
-- AlexNet
-- LeNet
-- SimpleCNN
-- VGG16
-- VGG19
-
-This set of models will be extended over the time.
-
-To set a predefined model, e.g. LeNet, from the modelzoo, it is necessary to add the `-zooModel "weka.dl4j.zoo.LeNet"` option via commandline, or call the `setZooModel(new LeNet())` on the `Dl4jMlpClassifier`.
--->
+<h1 id="model-zoo">Model Zoo</h1>
+<p>WekaDeeplearning4j adapts the modelzoo of Deeplearning4j. That means it is possible to load predefined architectures as neural network and train it on a new dataset. Currently implemented architectures are:</p>
+<ul>
+<li>AlexNet</li>
+<li>LeNet</li>
+<li>SimpleCNN</li>
+<li>VGG16</li>
+<li>VGG19</li>
+</ul>
+<p>This set of models will be extended over the time.</p>
+<p>To set a predefined model, e.g. LeNet, from the modelzoo, it is necessary to add the <code>-zooModel "weka.dl4j.zoo.LeNet"</code> option via commandline, or call the <code>setZooModel(new LeNet())</code> on the <code>Dl4jMlpClassifier</code>.</p>
               
             </div>
           </div>

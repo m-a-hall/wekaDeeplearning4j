@@ -105,6 +105,13 @@
                     <li><a class="toctree-l4" href="#solution">Solution</a></li>
                 
             
+                <li class="toctree-l3"><a href="#cuda-failed-to-allocate-x-bytes-from-device-memory">CUDA: Failed to allocate X bytes from DEVICE memory</a></li>
+                
+                    <li><a class="toctree-l4" href="#issue_1">Issue</a></li>
+                
+                    <li><a class="toctree-l4" href="#solution_1">Solution</a></li>
+                
+            
             </ul>
         
     </li>
@@ -149,7 +156,7 @@
                 <p>This section shall provide solutions for issues that  may appear.</p>
 <hr />
 <h2 id="cuda-gomp-version-40-not-found">CUDA: GOMP Version 4.0 not found</h2>
-<h5 id="issue">Issue</h5>
+<h4 id="issue">Issue</h4>
 <p>Starting the <code>Dl4jMlpClassifier</code> while using the GPU version of the package results in something similar to:</p>
 <pre><code>Caused by: java.lang.UnsatisfiedLinkError: 
     /home/user/.javacpp/cache/nd4j-cuda-8.0-0.9.1-linux-x86_64.jar/org/nd4j/nativeblas/linux-x86_64/libjnind4jcuda.so: 
@@ -168,7 +175,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </code></pre>
 
 <p>Therefore the libgomp.so.1 library is still of version 3.0, while the nd4j backend expects version 4.0.</p>
-<h5 id="solution">Solution</h5>
+<h4 id="solution">Solution</h4>
 <p>Download the latest version of libgomp for your system and export the following:</p>
 <pre><code class="bash">export LD_PRELOAD=&lt;PATH-TO-NEW-LIBGOMP.SO&gt;
 </code></pre>
@@ -181,6 +188,11 @@ $ tar -xvf data.tar.xz
 
 <p>This extracts the library to <code>./usr/lib/x86_64-linux-gnu/libgomp.so.1</code>. Afterward set the <code>LD_PRELOAD</code> variable to this path as an absolute path and export it as shown above.</p>
 <hr />
+<h2 id="cuda-failed-to-allocate-x-bytes-from-device-memory">CUDA: Failed to allocate X bytes from DEVICE memory</h2>
+<h4 id="issue_1">Issue</h4>
+<p>Your network architecture or your batch size consumes too much memory.</p>
+<h4 id="solution_1">Solution</h4>
+<p>Use a lower batch size, or adjust your Java heap and off-heap limits to your available memory accordingly to the <a href="https://deeplearning4j.org/memory">official Dl4J memory description</a>.</p>
               
             </div>
           </div>
