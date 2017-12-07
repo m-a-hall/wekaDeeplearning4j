@@ -71,12 +71,29 @@
     <li class="toctree-l2"><a href="#installing-the-weka-package">Installing the Weka Package</a></li>
     
 
+    <li class="toctree-l2"><a href="#using-wekadeeplearning4j-in-a-maven-project">Using wekaDeeplearning4j in a Maven Project</a></li>
+    
+
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../getting-started/">Getting Started</a>
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../user-guide/getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../user-guide/data/">Loading Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../user-guide/rnns/">Recurrent Neural Networks</a>
+                </li>
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -136,8 +153,8 @@
               
                 <h1 id="prerequisites">Prerequisites</h1>
 <ul>
-<li>Weka 3.8.1 or above (<a href="https://sourceforge.net/projects/weka/files/latest/download">here</a>)</li>
-<li>WekaDeeplearning4j package 1.2 or above (<a href="https://github.com/Waikato/wekaDeeplearning4j/releases/latest">here</a>)</li>
+<li>Weka 3.8.0 or above (<a href="https://sourceforge.net/projects/weka/files/latest/download">here</a>)</li>
+<li>WekaDeeplearning4j package 1.3.4 or above (<a href="https://github.com/Waikato/wekaDeeplearning4j/releases/latest">here</a>)</li>
 </ul>
 <p>You need to unzip the Weka zip file to a directory of your choice.</p>
 <h4 id="cpu">CPU</h4>
@@ -152,10 +169,10 @@
 <h1 id="installing-the-weka-package">Installing the Weka Package</h1>
 <p>Weka packages can be easily installed either via the user interface as described <a href="https://weka.wikispaces.com/How+do+I+use+the+package+manager%3F#toc2">here</a>, or simply via the commandline:</p>
 <pre><code class="bash">$ java -cp &lt;WEKA-JAR-PATH&gt; weka.core.WekaPackageManager \
-       -install-package wekaDeeplearning4j&lt;BACKEND&gt;-dev.zip
+       -install-package wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;.zip
 </code></pre>
 
-<p>where <code>&lt;WEKA-JAR-PATH&gt;</code> must be replaced by the path pointing to the Weka jar file and <code>&lt;BACKEND&gt;</code> must be replaced by either <code>CPU</code> or <code>GPU</code>, depending on which version you chose.</p>
+<p>where <code>&lt;WEKA-JAR-PATH&gt;</code> must be replaced by the path pointing to the Weka jar file, <code>&lt;BACKEND&gt;</code> must be replaced by either <code>CPU</code> or <code>GPU</code>, depending on which version you chose and <code>&lt;PLATFORM&gt;</code> must be replaced with your operating system (linux, macosx, windows).</p>
 <p>You can check whether the installation was successful with</p>
 <pre><code class="bash">$ java -cp &lt;WEKA-JAR-PATH&gt; weka.core.WekaPackageManager \
        -list-packages installed
@@ -164,7 +181,50 @@
 <p>which results in</p>
 <pre><code>Installed   Repository  Loaded  Package
 =========   ==========  ======  =======
-1.2.0       -----       Yes     wekaDeeplearning4j&lt;BACKEND&gt;-dev: Weka wrappers for Deeplearning4j
+1.3.4       -----       Yes     wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;: Weka wrappers for Deeplearning4j
+</code></pre>
+
+<h1 id="using-wekadeeplearning4j-in-a-maven-project">Using wekaDeeplearning4j in a Maven Project</h1>
+<p>It is also possible to include this package as maven project. As of now it is not provided in any maven repository, therefore you need to install this package to your local <code>.m2</code> repository:</p>
+<pre><code class="bash">$ git clone https://github.com/Waikato/wekaDeeplearning4j.git
+$ cd wekaDeeplearning4j/package
+$ mvn clean install -P &lt;backend&gt; # Replace &lt;backend&gt; with either &quot;CPU&quot; or &quot;GPU&quot;
+</code></pre>
+
+<p>Now you can add the maven dependency in your <code>pom.xml</code> file </p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;nz.ac.waikato.cms.weka&lt;/groupId&gt;
+    &lt;artifactId&gt;wekaDeeplearning4j&lt;/artifactId&gt;
+    &lt;version&gt;${wekaDeeplearning4j.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>When using the CPU the following two dependencies have to be added:</p>
+<pre><code class="xml">&lt;!--CPU Specific--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.nd4j&lt;/groupId&gt;
+    &lt;artifactId&gt;nd4j-native-platform&lt;/artifactId&gt;
+    &lt;version&gt;${nd4j.version}&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.bytedeco.javacpp-presets&lt;/groupId&gt;
+    &lt;artifactId&gt;openblas-platform&lt;/artifactId&gt;
+    &lt;version&gt;0.2.19-1.3&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>while using the GPU requires to add nd4j GPU dependencies:</p>
+<pre><code class="xml">&lt;!--GPU Specific--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.bytedeco.javacpp-presets&lt;/groupId&gt;
+    &lt;artifactId&gt;cuda&lt;/artifactId&gt;
+    &lt;version&gt;8.0-6.0-1.3&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.nd4j&lt;/groupId&gt;
+    &lt;artifactId&gt;nd4j-cuda-8.0-platform&lt;/artifactId&gt;
+    &lt;version&gt;${nd4j.version}&lt;/version&gt;
+&lt;/dependency&gt;
 </code></pre>
               
             </div>
@@ -173,7 +233,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../getting-started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../user-guide/getting-started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -207,7 +267,7 @@
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../getting-started/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../user-guide/getting-started/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

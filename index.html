@@ -71,7 +71,21 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="getting-started/">Getting Started</a>
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="user-guide/getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="user-guide/data/">Loading Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="user-guide/rnns/">Recurrent Neural Networks</a>
+                </li>
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -130,9 +144,9 @@
             <div class="section">
               
                 <h1 id="wekadeeplearning4j-deep-learning-using-weka">WekaDeeplearning4J: Deep Learning using Weka</h1>
-<p>WekaDeeplearning4J is a deep learning package for the <a href="https://www.cs.waikato.ac.nz/ml/weka/index.html">Weka</a> workbench. It is developed to incorporate the modern techniques of deep learning into Weka. The backend is provided by the <a href="https://deeplearning4j.org/">Deeplearning4J</a> Java library. </p>
+<p><img alt="Logo" src="./img/Weka_3_full.png" />
+WekaDeeplearning4J is a deep learning package for the <a href="https://www.cs.waikato.ac.nz/ml/weka/index.html">Weka</a> workbench. It is developed to incorporate the modern techniques of deep learning into Weka. The backend is provided by the <a href="https://deeplearning4j.org/">Deeplearning4J</a> Java library. </p>
 <p>The source code for this package is available on <a href="https://github.com/Waikato/wekaDeeplearning4j">GitHub</a>. The java-doc can be found <a href="https://waikato.github.io/wekaDeeplearning4j/doc/">here</a>.</p>
-<p><img alt="Weka workbench GUI" src="./img/gui.png" /></p>
 <p><strong>This documentation is still work in progress.</strong></p>
 <h2 id="functionality">Functionality</h2>
 <p>All functionality of this package is accessible via the Weka GUI, the commandline and programmatically in Java.</p>
@@ -142,8 +156,11 @@
 <li><strong>DenseLayer</strong>: all units are connected to all units of its parent layer</li>
 <li><strong>SubsamplingLayer</strong>: subsample from groups of units of the parent layer by different strategies (average, maximum, etc.)</li>
 <li><strong>BatchNormalization</strong>: applies the common batch normalization strategy on the activations of the parent layer</li>
-<li><strong>OutputLayer</strong>: generates <code>N</code> outputs based on a given activation function</li>
+<li><strong>LSTM</strong>: uses long short term memory approach</li>
+<li><strong>OutputLayer</strong>: generates classification / regression outputs</li>
 </ul>
+<p>Further configurations can be found in the <a href="user-guide/getting-started/">Getting Started</a> and the <a href="./examples">Examples</a> sections.
+<img alt="Weka workbench GUI" src="./img/gui.png" /></p>
               
             </div>
           </div>
@@ -195,5 +212,5 @@
 
 <!--
 MkDocs version : 0.17.1
-Build Date UTC : 2017-11-01 05:49:52
+Build Date UTC : 2017-12-07 05:02:00
 -->

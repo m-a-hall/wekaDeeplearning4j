@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Classifying the Iris Dataset - WekaDeeplearning4j</title>
+  <title>Recurrent Neural Networks - WekaDeeplearning4j</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Classifying the Iris Dataset";
-    var mkdocs_page_input_path = "examples/classifying-iris.md";
-    var mkdocs_page_url = "/examples/classifying-iris/";
+    var mkdocs_page_name = "Recurrent Neural Networks";
+    var mkdocs_page_input_path = "user-guide/rnns.md";
+    var mkdocs_page_url = "/user-guide/rnns/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -63,15 +63,27 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../user-guide/getting-started/">Getting Started</a>
+    <a class="" href="../getting-started/">Getting Started</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../user-guide/data/">Loading Data</a>
+    <a class="" href="../data/">Loading Data</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../../user-guide/rnns/">Recurrent Neural Networks</a>
+    <a class="current" href="./">Recurrent Neural Networks</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#sequence-classification-and-regression">Sequence Classification and Regression</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#working-with-text-data">Working with Text Data</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -80,27 +92,13 @@
 		
     <span class="caption-text">Examples</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Classifying the Iris Dataset</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#the-iris-dataset">The Iris Dataset</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#commandline">Commandline</a></li>
-        
-            <li><a class="toctree-l4" href="#java">Java</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../../examples/classifying-iris/">Classifying the Iris Dataset</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../classifying-mnist/">Classifying the MNIST Dataset</a>
+    <a class="" href="../../examples/classifying-mnist/">Classifying the MNIST Dataset</a>
                 </li>
     </ul>
 	    </li>
@@ -132,14 +130,14 @@
     
       
         
-          <li>Examples &raquo;</li>
+          <li>User Guide &raquo;</li>
         
       
     
-    <li>Classifying the Iris Dataset</li>
+    <li>Recurrent Neural Networks</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/examples/classifying-iris.md"
+        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/user-guide/rnns.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -149,58 +147,15 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="the-iris-dataset">The Iris Dataset</h1>
-<p>A very common dataset to test algorithms with is the <em>Iris Dataset</em> . The following explains how to build a neural network from the command line, programmatically in java and in the Weka workbench GUI.</p>
-<p>The iris dataset can be found in the <code>datasets/nominal</code> directory of the WekaDeeplearning4j package.</p>
-<p><details> 
-  <summary>Iris Visualization </summary>
-  <img alt="Iris Visualization" src="../../img/iris.png" />
-</details></p>
-<h2 id="commandline">Commandline</h2>
-<p>Starting simple, the most straight forward way to create a neural network with this package is by using the commandline. A Single-Layer-Perceptron (the most basic neural network possible) is shown in the following</p>
-<pre><code class="bash">$ java -cp $WEKA_HOME/weka.jar weka.Run \
-        .Dl4jMlpClassifier \
-        -S 1 \
-        -layer &quot;weka.dl4j.layers.OutputLayer \
-                -activation weka.dl4j.activations.ActivationSoftmax \
-                -lossFn weka.dl4j.lossfunctions.LossMCXENT&quot; \
-        -config &quot;weka.dl4j.NeuralNetConfiguration \
-                -updater weka.dl4j.updater.Adam&quot; \
-        -numEpochs 10 \
-        -t datasets/nominal/iris.arff \
-        -split-percentage 66
-</code></pre>
-
-<h2 id="java">Java</h2>
-<p>The same architecture can be built programmatically with the following Java code</p>
-<pre><code class="java">// Create a new Multi-Layer-Perceptron classifier
-Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
-// Set a seed for reproducable results
-clf.setSeed(1);
-
-// Load the iris dataset and set its class index
-Instances data = new Instances(new FileReader(&quot;datasets/nominal/iris.arff&quot;));
-data.setClassIndex(data.numAttributes() - 1);
-
-// Define the output layer
-OutputLayer outputLayer = new OutputLayer();
-outputLayer.setActivationFn(new ActivationSoftmax());
-outputLayer.setLossFn(new LossMCXENT());
-
-NeuralNetConfiguration nnc = new NeuralNetConfiguration();
-nnc.setUpdater(new Adam());
-
-// Add the layers to the classifier
-clf.setLayers(new Layer[]{outputLayer});
-clf.setNeuralNetConfiguration(nnc);
-
-// Evaluate the network
-Evaluation eval = new Evaluation(data);
-int numFolds = 10;
-eval.crossValidateModel(clf, data, numFolds, new Random(1));
-
-System.out.println(eval.toSummaryString());
-</code></pre>
+                <h1 id="sequence-classification-and-regression">Sequence Classification and Regression</h1>
+<p>The <code>RnnSequenceClassifier</code> allows for the construction of neural networks containing recurrent units. The following layer types are supported for these architectures:</p>
+<ul>
+<li>LSTM</li>
+<li>GravesLSTM</li>
+<li>RnnOutputLayer</li>
+</ul>
+<h2 id="working-with-text-data">Working with Text Data</h2>
+<p>This model is a good fit for classification and regression tasks on text data. Text can be interpreted as a sequence of so called <em>tokens</em>, where a token can be e.g. a character, word, sentence or even a whole document. These tokens can further be mapped with the help of an <a href="https://en.wikipedia.org/wiki/Word_embedding">embedding</a> into a vector space defined by the embedding. Therefore, a text document can be represented as a sequence of vectors. This can be achieved by using the <a href="../data/#textembeddinginstanceiterator">TextEmbeddingInstanceIterator</a> and providing an embedding that was previously downloaded (e.g. Google's pretrained News model from <a href="https://code.google.com/archive/p/word2vec/">here</a>). </p>
               
             </div>
           </div>
@@ -208,10 +163,10 @@ System.out.println(eval.toSummaryString());
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../classifying-mnist/" class="btn btn-neutral float-right" title="Classifying the MNIST Dataset">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../examples/classifying-iris/" class="btn btn-neutral float-right" title="Classifying the Iris Dataset">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../user-guide/rnns/" class="btn btn-neutral" title="Recurrent Neural Networks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../data/" class="btn btn-neutral" title="Loading Data"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -239,10 +194,10 @@ System.out.println(eval.toSummaryString());
           <a href="https://github.com/Waikato/wekaDeeplearning4j/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../user-guide/rnns/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../data/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../classifying-mnist/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../examples/classifying-iris/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
