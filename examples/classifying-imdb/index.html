@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Classifying the Iris Dataset - WekaDeeplearning4j</title>
+  <title>Classifying the IMDB Dataset - WekaDeeplearning4j</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Classifying the Iris Dataset";
-    var mkdocs_page_input_path = "examples/classifying-iris.md";
-    var mkdocs_page_url = "/examples/classifying-iris/";
+    var mkdocs_page_name = "Classifying the IMDB Dataset";
+    var mkdocs_page_input_path = "examples/classifying-imdb.md";
+    var mkdocs_page_url = "/examples/classifying-imdb/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -80,16 +80,22 @@
 		
     <span class="caption-text">Examples</span>
     <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../classifying-iris/">Classifying the Iris Dataset</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../classifying-mnist/">Classifying the MNIST Dataset</a>
+                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Classifying the Iris Dataset</a>
+    <a class="current" href="./">Classifying the IMDB Dataset</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#the-iris-dataset">The Iris Dataset</a></li>
+    <li class="toctree-l3"><a href="#the-imdb-dataset">The IMDB Dataset</a></li>
     
         <ul>
-        
-            <li><a class="toctree-l4" href="#commandline">Commandline</a></li>
         
             <li><a class="toctree-l4" href="#java">Java</a></li>
         
@@ -97,14 +103,6 @@
     
 
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../classifying-mnist/">Classifying the MNIST Dataset</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../classifying-imdb/">Classifying the IMDB Dataset</a>
                 </li>
     </ul>
 	    </li>
@@ -140,10 +138,10 @@
         
       
     
-    <li>Classifying the Iris Dataset</li>
+    <li>Classifying the IMDB Dataset</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/examples/classifying-iris.md"
+        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/examples/classifying-imdb.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -153,57 +151,63 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="the-iris-dataset">The Iris Dataset</h1>
-<p>A very common dataset to test algorithms with is the <em>Iris Dataset</em> . The following explains how to build a neural network from the command line, programmatically in java and in the Weka workbench GUI.</p>
-<p>The iris dataset can be found in the <code>datasets/nominal</code> directory of the WekaDeeplearning4j package.</p>
-<p><details> 
-  <summary>Iris Visualization </summary>
-  <img alt="Iris Visualization" src="../../img/iris.png" />
-</details></p>
-<h2 id="commandline">Commandline</h2>
-<p>Starting simple, the most straight forward way to create a neural network with this package is by using the commandline. A Single-Layer-Perceptron (the most basic neural network possible) is shown in the following</p>
-<pre><code class="bash">$ java -cp $WEKA_HOME/weka.jar weka.Run \
-        .Dl4jMlpClassifier \
-        -S 1 \
-        -layer &quot;weka.dl4j.layers.OutputLayer \
-                -activation weka.dl4j.activations.ActivationSoftmax \
-                -lossFn weka.dl4j.lossfunctions.LossMCXENT&quot; \
-        -config &quot;weka.dl4j.NeuralNetConfiguration \
-                -updater weka.dl4j.updater.Adam&quot; \
-        -numEpochs 10 \
-        -t datasets/nominal/iris.arff \
-        -split-percentage 66
-</code></pre>
-
+                <h1 id="the-imdb-dataset">The IMDB Dataset</h1>
+<p>As of <a href="http://ai.stanford.edu/~amaas/data/sentiment/">ai.stanford.edu</a>:</p>
+<blockquote>
+<p>This is a dataset for binary sentiment classification containing substantially more data than previous benchmark datasets. We provide a set of 25,000 highly polar movie reviews for training, and 25,000 for testing. There is additional unlabeled data for use as well. Raw text and already processed bag of words formats are provided. See the README file contained in the release for more details.</p>
+</blockquote>
+<p>The full IMDB dataset in the ARFF format can be found <a href="https://github.com/Waikato/wekaDeeplearning4j/blob/develop/package/src/test/resources/nominal/imdb.arff">here</a>.</p>
 <h2 id="java">Java</h2>
-<p>The same architecture can be built programmatically with the following Java code</p>
-<pre><code class="java">// Create a new Multi-Layer-Perceptron classifier
-Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
-// Set a seed for reproducable results
-clf.setSeed(1);
+<p>The following code builds a network consisting of an LSTM layer and an RnnOutputLayer, loading imdb reviews and mapping them into a sequence of vectors in the embedding space that is defined by the Google News model. Furthermore, gradient clipping at a value of 1.0 is applied to prevent the network from exploding gradients.</p>
+<pre><code class="java">// Download e.g the SLIM Google News model from
+// https://github.com/eyaler/word2vec-slim/raw/master/GoogleNews-vectors-negative300-SLIM.bin.gz
+final File modelSlim = new File(&quot;path/to/google/news/model&quot;);
 
-// Load the iris dataset and set its class index
-Instances data = new Instances(new FileReader(&quot;datasets/nominal/iris.arff&quot;));
-data.setClassIndex(data.numAttributes() - 1);
+// Setup hyperparameters
+final int truncateLength = 80;
+final int batchSize = 64;
+final int seed = 1;
+final int numEpochs = 10;
+final int tbpttLength = 20;
+final double l2 = 1e-5;
+final double gradientThreshold = 1.0;
+final double learningRate = 0.02;
 
-// Define the output layer
-OutputLayer outputLayer = new OutputLayer();
-outputLayer.setActivationFn(new ActivationSoftmax());
-outputLayer.setLossFn(new LossMCXENT());
+// Setup the iterator
+TextEmbeddingInstanceIterator tii = new TextEmbeddingInstanceIterator();
+tii.setWordVectorLocation(modelSlim);
+tii.setTruncateLength(truncateLength);
+tii.setTrainBatchSize(batchSize);
 
+// Initialize the classifier
+RnnSequenceClassifier clf = new RnnSequenceClassifier();
+clf.setSeed(seed);
+clf.setNumEpochs(numEpochs);
+clf.setInstanceIterator(tii);
+clf.settBPTTbackwardLength(tbpttLength);
+clf.settBPTTforwardLength(tbpttLength);
+
+// Define the layers
+LSTM lstm = new LSTM();
+lstm.setNOut(64);
+lstm.setActivationFunction(new ActivationTanH());
+
+RnnOutputLayer rnnOut = new RnnOutputLayer();
+
+// Network config
 NeuralNetConfiguration nnc = new NeuralNetConfiguration();
-nnc.setUpdater(new Adam());
+nnc.setL2(l2);
+nnc.setUseRegularization(true);
+nnc.setGradientNormalization(GradientNormalization.ClipElementWiseAbsoluteValue);
+nnc.setGradientNormalizationThreshold(gradientThreshold);
+nnc.setLearningRate(learningRate);
 
-// Add the layers to the classifier
-clf.setLayers(new Layer[]{outputLayer});
+// Config classifier
+clf.setLayers(lstm, rnnOut);
 clf.setNeuralNetConfiguration(nnc);
-
-// Evaluate the network
-Evaluation eval = new Evaluation(data);
-int numFolds = 10;
-eval.crossValidateModel(clf, data, numFolds, new Random(1));
-
-System.out.println(eval.toSummaryString());
+Instances data = new Instances(new FileReader(&quot;src/test/resources/nominal/imdb.arff&quot;));
+data.setClassIndex(1);
+clf.buildClassifier(data);
 </code></pre>
               
             </div>
@@ -212,10 +216,10 @@ System.out.println(eval.toSummaryString());
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../classifying-mnist/" class="btn btn-neutral float-right" title="Classifying the MNIST Dataset">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../troubleshooting/" class="btn btn-neutral float-right" title="Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../user-guide/rnns/" class="btn btn-neutral" title="Recurrent Neural Networks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../classifying-mnist/" class="btn btn-neutral" title="Classifying the MNIST Dataset"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -243,10 +247,10 @@ System.out.println(eval.toSummaryString());
           <a href="https://github.com/Waikato/wekaDeeplearning4j/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../user-guide/rnns/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../classifying-mnist/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../classifying-mnist/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../troubleshooting/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

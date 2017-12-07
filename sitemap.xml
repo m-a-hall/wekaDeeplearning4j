@@ -53,6 +53,12 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>/examples/classifying-imdb/</loc>
+     <lastmod>2017-12-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
