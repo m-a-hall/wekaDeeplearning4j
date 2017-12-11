@@ -160,6 +160,14 @@
 </ul>
 <h2 id="working-with-text-data">Working with Text Data</h2>
 <p>This model is a good fit for classification and regression tasks on text data. Text can be interpreted as a sequence of so called <em>tokens</em>, where a token can be e.g. a character, word, sentence or even a whole document. These tokens can further be mapped with the help of an <a href="https://en.wikipedia.org/wiki/Word_embedding">embedding</a> into a vector space defined by the embedding. Therefore, a text document can be represented as a sequence of vectors. This can be achieved by using the <a href="../data/#textembeddinginstanceiterator">TextEmbeddingInstanceIterator</a> and providing an embedding that was previously downloaded (e.g. Google's pretrained News model from <a href="https://code.google.com/archive/p/word2vec/">here</a>). </p>
+<p>Currently supported embedding formats are:</p>
+<ul>
+<li>ARFF</li>
+<li>CSV</li>
+<li>CSV gzipped</li>
+<li>Google binary format</li>
+<li>DL4J compressed format</li>
+</ul>
               
             </div>
           </div>
