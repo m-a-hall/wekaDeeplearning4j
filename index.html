@@ -83,7 +83,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="user-guide/rnns/">Recurrent Neural Networks</a>
+    <a class="" href="user-guide/nlp/">Natural Language Processing</a>
                 </li>
     </ul>
 	    </li>
@@ -151,7 +151,6 @@
 <p><img alt="Logo" src="./img/Weka_3_full.png" />
 WekaDeeplearning4J is a deep learning package for the <a href="https://www.cs.waikato.ac.nz/ml/weka/index.html">Weka</a> workbench. It is developed to incorporate the modern techniques of deep learning into Weka. The backend is provided by the <a href="https://deeplearning4j.org/">Deeplearning4J</a> Java library. </p>
 <p>The source code for this package is available on <a href="https://github.com/Waikato/wekaDeeplearning4j">GitHub</a>. The java-doc can be found <a href="https://waikato.github.io/wekaDeeplearning4j/doc/">here</a>.</p>
-<p><strong>This documentation is still work in progress.</strong></p>
 <h2 id="functionality">Functionality</h2>
 <p>All functionality of this package is accessible via the Weka GUI, the commandline and programmatically in Java.</p>
 <p>The following Neural Network Layers are available to build sophisticated architectures:</p>
@@ -161,6 +160,7 @@ WekaDeeplearning4J is a deep learning package for the <a href="https://www.cs.wa
 <li><strong>SubsamplingLayer</strong>: subsample from groups of units of the parent layer by different strategies (average, maximum, etc.)</li>
 <li><strong>BatchNormalization</strong>: applies the common batch normalization strategy on the activations of the parent layer</li>
 <li><strong>LSTM</strong>: uses long short term memory approach</li>
+<li><strong>GlobalPoolingLayer</strong>: apply pooling over time for RNNs and pooling for CNNs applied on sequences</li>
 <li><strong>OutputLayer</strong>: generates classification / regression outputs</li>
 </ul>
 <p>Further configurations can be found in the <a href="user-guide/getting-started/">Getting Started</a> and the <a href="./examples">Examples</a> sections.
@@ -216,5 +216,5 @@ WekaDeeplearning4J is a deep learning package for the <a href="https://www.cs.wa
 
 <!--
 MkDocs version : 0.17.1
-Build Date UTC : 2017-12-11 01:12:49
+Build Date UTC : 2017-12-13 06:13:42
 -->

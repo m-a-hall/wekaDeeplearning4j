@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Recurrent Neural Networks - WekaDeeplearning4j</title>
+  <title>Natural Language Processing - WekaDeeplearning4j</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Recurrent Neural Networks";
-    var mkdocs_page_input_path = "user-guide/rnns.md";
-    var mkdocs_page_url = "/user-guide/rnns/";
+    var mkdocs_page_name = "Natural Language Processing";
+    var mkdocs_page_input_path = "user-guide/nlp.md";
+    var mkdocs_page_url = "/user-guide/nlp/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -71,14 +71,20 @@
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Recurrent Neural Networks</a>
+    <a class="current" href="./">Natural Language Processing</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#sequence-classification-and-regression">Sequence Classification and Regression</a></li>
+    <li class="toctree-l3"><a href="#text-processing-in-wekadeeplearning4j">Text Processing in WekaDeeplearning4J</a></li>
     
         <ul>
         
-            <li><a class="toctree-l4" href="#working-with-text-data">Working with Text Data</a></li>
+            <li><a class="toctree-l4" href="#using-convolutional-neural-networks">Using Convolutional Neural Networks</a></li>
+        
+            <li><a class="toctree-l4" href="#using-recurrent-neural-networks">Using Recurrent Neural Networks</a></li>
+        
+            <li><a class="toctree-l4" href="#embeddings">Embeddings</a></li>
+        
+            <li><a class="toctree-l4" href="#weka-filters">Weka Filters</a></li>
         
         </ul>
     
@@ -138,10 +144,10 @@
         
       
     
-    <li>Recurrent Neural Networks</li>
+    <li>Natural Language Processing</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/user-guide/rnns.md"
+        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/user-guide/nlp.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -151,15 +157,28 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="sequence-classification-and-regression">Sequence Classification and Regression</h1>
+                <h1 id="text-processing-in-wekadeeplearning4j">Text Processing in WekaDeeplearning4J</h1>
+<p>There are currently two main deep learning architectures supported to process text data, as explained in the below.
+Text can be interpreted as a sequence of so called <em>tokens</em>, where a token can be e.g. a character, word, sentence or even a whole document. These tokens can further be mapped with the help of an <a href="https://en.wikipedia.org/wiki/Word_embedding">embedding</a> into a vector space defined by the embedding. Therefore, a text document can be represented as a sequence of vectors. This can be achieved by using the <a href="../data/#cnnrnntextembeddinginstanceiterator">Cnn/RnnTextEmbeddingInstanceIterator</a> and providing an embedding that was previously downloaded (e.g. Google's pretrained News model from <a href="https://code.google.com/archive/p/word2vec/">here</a>). </p>
+<h3 id="using-convolutional-neural-networks">Using Convolutional Neural Networks</h3>
+<p>To use convolution on text data, it is necessary to correctly preprocess the input into a certain shape and make sure to set use adjust the convolution layer accordingly. A good blog post on this is <a href="http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/">Understanding Convolutional Neural Networks for NLP</a>.</p>
+<p>A few things to keep in mind when building a CNN on text data:</p>
+<ul>
+<li>Start with <code>ConvolutionLayer</code></li>
+<li>Adding multiple <code>ConvolutionLayer</code> sequentially will simulate an input for each layer and merge the output of all layers to a new output with the number of layer as depth</li>
+<li><code>ConvolutionMode</code> of each <code>ConvolutionLayer</code> must be set to <code>SAME</code></li>
+<li><code>ConvolutionLayer</code> must be followed by a <code>GlobalPoolingLayer</code></li>
+</ul>
+<p>Use the <code>CnnTextEmbeddingInstanceIterator</code> or <code>CnnTextFilesEmbeddingInstanceIterator</code> accordingly.</p>
+<h3 id="using-recurrent-neural-networks">Using Recurrent Neural Networks</h3>
 <p>The <code>RnnSequenceClassifier</code> allows for the construction of neural networks containing recurrent units. The following layer types are supported for these architectures:</p>
 <ul>
 <li>LSTM</li>
 <li>GravesLSTM</li>
 <li>RnnOutputLayer</li>
 </ul>
-<h2 id="working-with-text-data">Working with Text Data</h2>
-<p>This model is a good fit for classification and regression tasks on text data. Text can be interpreted as a sequence of so called <em>tokens</em>, where a token can be e.g. a character, word, sentence or even a whole document. These tokens can further be mapped with the help of an <a href="https://en.wikipedia.org/wiki/Word_embedding">embedding</a> into a vector space defined by the embedding. Therefore, a text document can be represented as a sequence of vectors. This can be achieved by using the <a href="../data/#textembeddinginstanceiterator">TextEmbeddingInstanceIterator</a> and providing an embedding that was previously downloaded (e.g. Google's pretrained News model from <a href="https://code.google.com/archive/p/word2vec/">here</a>). </p>
+<p>Use the <code>RnnTextEmbeddingInstanceIterator</code> or <code>RnnTextFilesEmbeddingInstanceIterator</code> accordingly.</p>
+<h3 id="embeddings">Embeddings</h3>
 <p>Currently supported embedding formats are:</p>
 <ul>
 <li>ARFF</li>
@@ -168,6 +187,11 @@
 <li>Google binary format</li>
 <li>DL4J compressed format</li>
 </ul>
+<h3 id="weka-filters">Weka Filters</h3>
+<ol>
+<li><strong>Dl4jStringToWord2Vec</strong>: calculates word embeddings on a string attribute using the <a href="https://code.google.com/archive/p/word2vec/">Word2Vec</a> method</li>
+<li><strong>Dl4jStringToGlove</strong>: calculates word embeddings on a string attribute using the <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> method.</li>
+</ol>
               
             </div>
           </div>
