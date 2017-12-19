@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>/install/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -21,19 +21,19 @@
         
     <url>
      <loc>/user-guide/getting-started/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/user-guide/data/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/user-guide/nlp/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -43,19 +43,19 @@
         
     <url>
      <loc>/examples/classifying-iris/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/examples/classifying-mnist/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/examples/classifying-imdb/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -64,7 +64,7 @@
     
     <url>
      <loc>/troubleshooting/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
