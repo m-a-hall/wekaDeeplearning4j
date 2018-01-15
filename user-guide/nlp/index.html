@@ -161,14 +161,15 @@
 <p>There are currently two main deep learning architectures supported to process text data, as explained in the below.
 Text can be interpreted as a sequence of so called <em>tokens</em>, where a token can be e.g. a character, word, sentence or even a whole document. These tokens can further be mapped with the help of an <a href="https://en.wikipedia.org/wiki/Word_embedding">embedding</a> into a vector space defined by the embedding. Therefore, a text document can be represented as a sequence of vectors. This can be achieved by using the <a href="../data/#cnnrnntextembeddinginstanceiterator">Cnn/RnnTextEmbeddingInstanceIterator</a> and providing an embedding that was previously downloaded (e.g. Google's pretrained News model from <a href="https://code.google.com/archive/p/word2vec/">here</a>). </p>
 <h3 id="using-convolutional-neural-networks">Using Convolutional Neural Networks</h3>
-<p>To use convolution on text data, it is necessary to correctly preprocess the input into a certain shape and make sure to set use adjust the convolution layer accordingly. A good blog post on this is <a href="http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/">Understanding Convolutional Neural Networks for NLP</a>.</p>
-<p>A few things to keep in mind when building a CNN on text data:</p>
+<p>To use convolution on text data, it is necessary to correctly preprocess the input into a certain shape and make sure to set the convolution layers accordingly. A good blog post on this is <a href="http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/">Understanding Convolutional Neural Networks for NLP</a>.</p>
+<p>A few important things to keep in mind when building a CNN on text data:</p>
 <ul>
 <li>Start with <code>ConvolutionLayer</code></li>
 <li>Adding multiple <code>ConvolutionLayer</code> sequentially will simulate an input for each layer and merge the output of all layers to a new output with the number of layer as depth</li>
 <li><code>ConvolutionMode</code> of each <code>ConvolutionLayer</code> must be set to <code>SAME</code></li>
-<li><code>ConvolutionLayer</code> must be followed by a <code>GlobalPoolingLayer</code></li>
+<li>The list of <code>ConvolutionLayer</code> must be followed by a <code>GlobalPoolingLayer</code></li>
 </ul>
+<p>See also: <a href="../../examples/classifying-imdb/#java-cnn">Java Examples</a></p>
 <p>Use the <code>CnnTextEmbeddingInstanceIterator</code> or <code>CnnTextFilesEmbeddingInstanceIterator</code> accordingly.</p>
 <h3 id="using-recurrent-neural-networks">Using Recurrent Neural Networks</h3>
 <p>The <code>RnnSequenceClassifier</code> allows for the construction of neural networks containing recurrent units. The following layer types are supported for these architectures:</p>
