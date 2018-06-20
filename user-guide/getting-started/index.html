@@ -246,14 +246,14 @@ clf.setNeuralNetConfiguration(nnc);
 
 <p>Finally the layers are set with</p>
 <pre><code class="java">// Add the layers to the classifier
-clf.setLayers(new Layer[]{denseLayer, outputLayer});
+clf.setLayers(denseLayer, outputLayer);
 </code></pre>
 
 <h3 id="without-maven">Without Maven</h3>
 <p>If you are not using the package in a maven project as described <a href="../install#using-wekadeeplearning4j-in-a-maven-project">here</a>, you need to add the following directories to your java classpath</p>
 <ul>
-<li><code>$WEKA_HOME/packages/wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;/*</code></li>
-<li><code>$WEKA_HOME/packages/wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;/lib*</code></li>
+<li><code>$WEKA_HOME/packages/wekaDeeplearning4j/*</code></li>
+<li><code>$WEKA_HOME/packages/wekaDeeplearning4j/lib*</code></li>
 </ul>
 <p>Assuming you have the following <code>Main.java</code> file:</p>
 <pre><code class="java">import weka.classifiers.Evaluation;
@@ -267,7 +267,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) throws Exception {
         Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
-        String irisPath = Paths.get(System.getenv(&quot;WEKA_HOME&quot;), &quot;packages&quot;, &quot;wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;&quot;, &quot;datasets&quot;, &quot;nominal&quot;, &quot;iris.arff&quot;).toString();
+        String irisPath = Paths.get(System.getenv(&quot;WEKA_HOME&quot;), &quot;packages&quot;, &quot;wekaDeeplearning4j&quot;, &quot;datasets&quot;, &quot;nominal&quot;, &quot;iris.arff&quot;).toString();
         Instances inst = new Instances(new FileReader(irisPath));
         inst.setClassIndex(inst.numAttributes() - 1);
         Evaluation ev = new Evaluation(inst);
@@ -278,11 +278,11 @@ public class Main {
 </code></pre>
 
 <p>You can now compile it including the libraries in the classpath:</p>
-<pre><code class="bash">javac -cp &quot;$WEKA_HOME/weka.jar:$WEKA_HOME/packages/wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;/*:$WEKA_HOME/packages/wekaDeeplearning4j-&lt;BACKEND&gt;-&lt;PLATFORM&gt;/lib/*&quot; Main.java
+<pre><code class="bash">javac -cp &quot;$WEKA_HOME/weka.jar:$WEKA_HOME/packages/wekaDeeplearning4j/*:$WEKA_HOME/packages/wekaDeeplearning4j/lib/*&quot; Main.java
 </code></pre>
 
 <p>and run it with:</p>
-<pre><code class="bash">java -cp &quot;$WEKA_HOME/weka.jar:$WEKA_HOME/packages/wekaDeeplearning4j&lt;BACKEND&gt;-&lt;PLATFORM&gt;/*:$WEKA_HOME/packages/wekaDeeplearning4j&lt;BACKEND&gt;-&lt;PLATFORM&gt;/lib/*:.&quot; Main
+<pre><code class="bash">java -cp &quot;$WEKA_HOME/weka.jar:$WEKA_HOME/packages/wekaDeeplearning4j/*:$WEKA_HOME/packages/wekaDeeplearning4j/lib/*:.&quot; Main
 </code></pre>
 
 <p>(Use <code>;</code> as classpath separator for Windows instead) </p>
@@ -293,11 +293,10 @@ public class Main {
 <ul>
 <li>AlexNet</li>
 <li>LeNet</li>
+<li>GoogLeNet</li>
 <li>SimpleCNN</li>
 <li>VGG16</li>
 <li>VGG19</li>
-<li>ResNet50</li>
-<li>InceptionResNetV1</li>
 </ul>
 <p>This set of models will be extended over the time.</p>
 <p>To set a predefined model, e.g. LeNet, from the model zoo, it is necessary to add the <code>-zooModel "weka.dl4j.zoo.LeNet"</code> option via commandline, or call the <code>setZooModel(new LeNet())</code> on the <code>Dl4jMlpClassifier</code> object.</p>
