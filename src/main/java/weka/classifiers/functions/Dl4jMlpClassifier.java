@@ -164,7 +164,9 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
    * The actual neural network model.
    */
   protected transient ComputationGraph model;
-  /** Used to leverage multiple GPUs (if available) */
+  /**
+   * Used to leverage multiple GPUs (if available)
+   */
   protected transient ParallelWrapper parallelWrapper;
 
   /**
@@ -270,39 +272,42 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
   protected boolean doNotClearFilesystemCache;
 
   /**
-   * Number of physical GPUs available. If greater than 1, then data-parallel
-   * training + parameter averaging is used to leverage multiple GPUs. Ignored
-   * entirely if there is no GPU backend available.
+   * Number of physical GPUs available. If greater than 1, then data-parallel training + parameter
+   * averaging is used to leverage multiple GPUs. Ignored entirely if there is no GPU backend
+   * available.
    */
   protected int numGPUs = 1;
 
   /**
-   * Size of the prefetch buffer when leveraging multiple GPUs. Ignored if there
-   * is only one GPU, or there is no GPU backend available.
+   * Size of the prefetch buffer when leveraging multiple GPUs. Ignored if there is only one GPU, or
+   * there is no GPU backend available.
    */
   protected int prefetchBufferSize = 24;
 
   /**
    * How often (in iterations, not epochs) to average model parameters when leveraging multiple
-   * GPUs. Ignored if there is only one GPU, or if there is no GPU backend
-   * available.
+   * GPUs. Ignored if there is only one GPU, or if there is no GPU backend available.
    */
   protected int averagingFrequency = 10;
 
-  /** True if the Cuda/GPU backend is available */
+  /**
+   * True if the Cuda/GPU backend is available
+   */
   protected boolean gpuBackendAvailable;
 
-  /** True once multi-gpu is set on CudaEnvironment.Configuration */
+  /**
+   * True once multi-gpu is set on CudaEnvironment.Configuration
+   */
   protected static boolean s_cudaMultiGPUSet;
 
   public Dl4jMlpClassifier() {
     if (!s_cudaMultiGPUSet) {
       try {
         ClassLoader packageLoader = WekaPackageClassLoaderManager.getWekaPackageClassLoaderManager()
-          .getLoaderForClass(this.getClass().getCanonicalName());
+            .getLoaderForClass(this.getClass().getCanonicalName());
 
         Class<?> cudaEnvClass = Class
-          .forName("org.nd4j.jita.conf.CudaEnvironment", true, packageLoader);
+            .forName("org.nd4j.jita.conf.CudaEnvironment", true, packageLoader);
         Method m = cudaEnvClass.getMethod("getInstance");
         Object result = m.invoke(null);
         if (result == null) {
@@ -318,7 +323,7 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
             m.invoke(result, true);
 
             m = result.getClass().getMethod("allowCrossDeviceAccess",
-              boolean.class);
+                boolean.class);
             m.invoke(result, true);
           }
         }
@@ -765,11 +770,11 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
   }
 
   @OptionMetadata(
-    displayName = "Number of GPUs",
-    description = "Number of available GPUs (ignored if no GPU backend available)",
-    commandLineParamName = "numGPUs",
-    commandLineParamSynopsis = "-numGPUs <integer>",
-    displayOrder = 33)
+      displayName = "Number of GPUs",
+      description = "Number of available GPUs (ignored if no GPU backend available)",
+      commandLineParamName = "numGPUs",
+      commandLineParamSynopsis = "-numGPUs <integer>",
+      displayOrder = 33)
   public void setNumGPUs(int numGPUs) {
     this.numGPUs = numGPUs;
   }
@@ -779,12 +784,12 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
   }
 
   @OptionMetadata(displayName = "Size of prefetch buffer for multiple GPUs",
-    description = "Size of the prefetch buffer that will be used for background "
-      + "data prefetching (0 = disable prefetch). Ignored if there is only one "
-      + "GPU, or no GPU backend available.",
-    commandLineParamName = "prefetchSize",
-    commandLineParamSynopsis = "-prefetchSize <integer>",
-    displayOrder = 34)
+      description = "Size of the prefetch buffer that will be used for background "
+          + "data prefetching (0 = disable prefetch). Ignored if there is only one "
+          + "GPU, or no GPU backend available.",
+      commandLineParamName = "prefetchSize",
+      commandLineParamSynopsis = "-prefetchSize <integer>",
+      displayOrder = 34)
   public void setPrefetchBufferSize(int prefetchBufferSize) {
     this.prefetchBufferSize = prefetchBufferSize;
   }
@@ -794,14 +799,14 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
   }
 
   @OptionMetadata(displayName = "Model parameter averaging frequency",
-    description = "How often (in iterations, not epochs) to average model "
-      + "parameters when leveraging "
-      + "multiple GPUs (ignored if there is only one GPU, or no GPU backend "
-      + "available). Set no greater than num instances/num GPUs or no averaging "
-      + "will occur!",
-    commandLineParamName = "averagingFrequency",
-    commandLineParamSynopsis = "-averagingFrequency <integer>",
-    displayOrder = 35)
+      description = "How often (in iterations, not epochs) to average model "
+          + "parameters when leveraging "
+          + "multiple GPUs (ignored if there is only one GPU, or no GPU backend "
+          + "available). Set no greater than num instances/num GPUs or no averaging "
+          + "will occur!",
+      commandLineParamName = "averagingFrequency",
+      commandLineParamSynopsis = "-averagingFrequency <integer>",
+      displayOrder = 35)
   public void setParameterAveragingFrequency(int frequency) {
     averagingFrequency = frequency;
   }
@@ -912,15 +917,15 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
   }
 
   /**
-   * Wrap the model in a ParallelWrapper for data parallel training on multiple
-   * GPUs (if available).
+   * Wrap the model in a ParallelWrapper for data parallel training on multiple GPUs (if
+   * available).
    */
   protected void initParallelWrapperIfApplicable() {
 
     Nd4jBackend b = Nd4j.getBackend();
     if (b != null) {
       gpuBackendAvailable = b.getClass().getCanonicalName()
-        .toLowerCase().contains("jcublas");
+          .toLowerCase().contains("jcublas");
     }
 
     // only configure if the gpu backend is available and the user has requested
@@ -932,19 +937,19 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
 
       if (getNumGPUs() > Nd4j.getAffinityManager().getNumberOfDevices()) {
         log.warn("Number of requested GPUs {}, is greater than number "
-          + "available {}", getNumGPUs(), Nd4j.getAffinityManager().getNumberOfDevices());
+            + "available {}", getNumGPUs(), Nd4j.getAffinityManager().getNumberOfDevices());
       }
 
-      if (prefetchBufferSize > 0 &&  prefetchBufferSize < getNumGPUs()) {
+      if (prefetchBufferSize > 0 && prefetchBufferSize < getNumGPUs()) {
         prefetchBufferSize = getNumGPUs();
       }
 
       log.info("Initializing for parallel training on {} workers", getNumGPUs());
       parallelWrapper = new ParallelWrapper.Builder(model)
-        .prefetchBuffer(getPrefetchBufferSize())
-        .workers(getNumGPUs())
-        .averagingFrequency(getParameterAveragingFrequency())
-        .build();
+          .prefetchBuffer(getPrefetchBufferSize())
+          .workers(getNumGPUs())
+          .averagingFrequency(getParameterAveragingFrequency())
+          .build();
     }
   }
 
@@ -1076,6 +1081,7 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
       String cacheDirSuffix) throws Exception {
     DataSetIterator it = instanceIterator.getDataSetIterator(data, getSeed());
 
+    String wekaDl4jTmp = System.getProperty("weka.dl4j.tmpdir");
     // Use caching if set
     switch (cm) {
       case MEMORY: // Use memory as cache
@@ -1083,7 +1089,8 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
         it = new CachingDataSetIterator(it, memCache);
         break;
       case FILESYSTEM: // use filesystem as cache
-        final String tmpDir = System.getProperty("java.io.tmpdir");
+        final String tmpDir =
+            wekaDl4jTmp != null ? wekaDl4jTmp : System.getProperty("java.io.tmpdir");
         final String suffix =
             cacheDirSuffix.isEmpty() ? "" : "-" + cacheDirSuffix;
         final File cacheDir =
